@@ -8,7 +8,9 @@ public class Question {
     private String correctAnswer;
     private List<String> answers;
 
-    public Question(){}
+    public Question(){
+
+    }
 
     public Question(String question, String rightAnswer){
         this.question = question;
