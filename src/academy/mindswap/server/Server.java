@@ -1,6 +1,7 @@
-import GameMode.MultiplayerMode;
-import GameMode.SingleplayerMode;
-import Util.Messages;
+package academy.mindswap.server;
+
+import academy.mindswap.server.commands.Command;
+import academy.mindswap.server.util.Messages;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -51,7 +52,7 @@ public class Server {
 
     public synchronized void broadcast(String name, String message) {
 
-    }  //TODO -> Select the playerHandlers pair in game to send questions to players.
+    }  //TODO -> Select the playerHandlers pair in game to send academy.mindswap.player.server.questions to players.
 
     public void sortTop10() {
         top10Scores.sort(new Comparator<Integer>() {
@@ -81,7 +82,7 @@ public class Server {
 
     public void addScoreToList(PlayerHandler playerHandler) {
         //GUARANTEE SORTED MAJOR TO MINOR!
-        if (playerHandler.playerScore == 0){
+        if (playerHandler.playerScore == 0) {
             return;
         }
         top10Scores.addLast(playerHandler.playerScore);
@@ -123,9 +124,12 @@ public class Server {
                 in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
 
                 while (!playerSocket.isClosed()) {
-                    dealWithMainMenu(in.readLine());
                     message = in.readLine();
 
+                    if (!wantsToPlay(message)) {
+                        dealWithNoPlaying(message);
+                        continue;
+                    }
 
                     if (isCommand(message)) {
                         dealWithCommand(message);
@@ -133,39 +137,53 @@ public class Server {
                     }
 
                     if (message.equals("")) {
-                        return;
+                        continue;
                     }
-
-                    broadcast(name, message);
+                    play(message);
                 }
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 System.err.println(Messages.CLIENT_ERROR + e.getMessage());
             }
         }
 
-        private void dealWithMainMenu(String message){
+        private boolean wantsToPlay(String message) {
+            return message.equals("1") || message.equals("2");
+        }
 
-            do {
-                switch (message) {
-                    case "1":
-                        new SingleplayerMode(this).execute();
-                        break;
-                    case "2":
-                        new MultiplayerMode(this).execute();
-                        break;
-                    case "3":
-                        send(Messages.COMMAND_LIST);
-                        break;
-                    case "4":
-                        listOfTop10(this);
-                    case "0":
-                        send(Messages.GOODBYE_MESSAGE);
-                        close();
-                    default:
-                        send(Messages.READ_RULES);
-                        return;
-                }
-            }while (!message.equals(0));
+        private void play(String message) {
+            Command command = Command.getCommandFromMessage(message);
+
+            if (command == null) {
+                send(Messages.NO_SUCH_COMMAND);
+                return;
+            }
+
+            command.getHandler().execute(Server.this, this);
+        }
+
+        private void dealWithNoPlaying(String message) throws InterruptedException {
+
+            switch (message) {
+                case "3":
+                    send(Messages.COMMAND_LIST);
+                    Thread.sleep(2000);
+                    send(Messages.MAIN_MENU);
+                    break;
+                case "4":
+                    listOfTop10(this);
+                    Thread.sleep(2000);
+                    send(Messages.MAIN_MENU);
+                    break;
+                case "0":
+                    send(Messages.GOODBYE_MESSAGE);
+                    close();
+                    break;
+                default:
+                    send(Messages.READ_RULES);
+                    Thread.sleep(2000);
+                    send(Messages.MAIN_MENU);
+                    break;
+            }
         }
 
         private boolean isCommand(String message) {
@@ -173,17 +191,16 @@ public class Server {
         }
 
         private void dealWithCommand(String message) throws IOException {
-            String description = message.split(" ")[0];
-            Command command = Command.getCommandFromDescription(description);
 
-            if (command == null) {
-                out.write(Messages.NO_SUCH_COMMAND);
-                out.newLine();
-                out.flush();
-                return;
+            switch(message){
+                case "/quit":
+                    send(Messages.GOODBYE_IN_LOVE);
+                    close();
+                    break;
+                default:
+                    send(Messages.READ_RULES);
+                    break;
             }
-
-            //command.getHandler().execute(Server.this, this);
         }
 
         public void send(String message) {
@@ -199,6 +216,7 @@ public class Server {
         public void close() {
             try {
                 addScoreToList(this);
+                removePlayerHandler(this);
                 playerSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();

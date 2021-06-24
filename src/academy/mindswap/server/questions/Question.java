@@ -1,4 +1,4 @@
-package Question;
+package academy.mindswap.server.questions;
 
 import java.util.ArrayList;
 import java.util.List;

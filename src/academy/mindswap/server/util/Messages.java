@@ -1,4 +1,4 @@
-package Util;
+package academy.mindswap.server.util;
 
 public class Messages {
 
