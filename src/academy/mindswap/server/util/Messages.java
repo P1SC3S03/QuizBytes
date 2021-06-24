@@ -16,6 +16,7 @@ public class Messages {
     public static final String GOODBYE_MESSAGE = "HAHAHA I knew from the start you were a quitter... BUUUUHHHH\n";
     public static final String DEFAULT_NAME = "Player: \n";
     public static final String NO_TOP_PLAYERS = "There are no top players yet. You are lucky! ;) \n";
+    public static final String WAIT_FOR_ANOTHER_PLAYER = "Please wait for another player to join you.\n";
     public static final String MAIN_MENU = """
             MAIN MENU:
             1 -> Singleplayer

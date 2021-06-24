@@ -1,6 +1,8 @@
 package academy.mindswap.server;
 
 import academy.mindswap.server.commands.Command;
+import academy.mindswap.server.commands.MultiplayerCommand;
+import academy.mindswap.server.commands.SingleplayerCommand;
 import academy.mindswap.server.util.Messages;
 import jdk.swing.interop.SwingInterOpUtils;
 
@@ -13,7 +15,8 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private final List<PlayerHandler> playersHandlerList; //List or Double Array ??? PlayerHandlers
+    private final List<PlayerHandler> playersHandlerList; //List or Double Array ???
+    private final LinkedList<PlayerHandler> multiPLayerList;
     private final int listLimit = 10;
     private ServerSocket serverSocket;
     private ExecutorService threadPool;
@@ -26,6 +29,7 @@ public class Server {
         playersHandlerList = new LinkedList<>();
         port = 8080;
         top10Scores = new LinkedList<>();
+        multiPLayerList = new LinkedList<>();
     }
 
     public void start(int port) throws IOException {
@@ -95,6 +99,10 @@ public class Server {
         playersHandlerList.remove(playerHandler);
     }
 
+    public List<PlayerHandler> getMultiPlayerList() {
+        return multiPLayerList;
+    }
+
    /* public Optional<PlayerHandler> getClientByName(String name) {
         return playersHandlerList.stream()
                 .filter(clientConnectionHandler -> clientConnectionHandler.getName().equalsIgnoreCase(name))
@@ -142,7 +150,7 @@ public class Server {
                     if (message.equals("")) {
                         continue;
                     }
-                    play(message);
+                    //play(message);
                 }
             } catch (IOException | InterruptedException e) {
                 System.err.println(Messages.CLIENT_ERROR);
@@ -150,10 +158,10 @@ public class Server {
         }
 
         private boolean wantsToPlay(String message) {
-            return message.equals("1") || message.equals("2");
+            return message.equals("1");
         }
 
-        private void play(String message) {
+        /*private void play(String message) {
             Command command = Command.getCommandFromMessage(message);
 
             if (command == null) {
@@ -162,10 +170,15 @@ public class Server {
             }
 
             command.getHandler().execute(Server.this, this);
-        }
+        }*/
 
-        private void dealWithNoPlaying(String message) throws InterruptedException {
+        private void dealWithNoPlaying(String message) throws InterruptedException, IOException {
             switch (message) {
+                case "2":
+                    multiPLayerList.add(this);
+                    MultiplayerCommand multiPlayerCommand = new MultiplayerCommand();
+                    multiPlayerCommand.execute(Server.this, this);
+                    break;
                 case "3":
                     send(Messages.COMMAND_LIST);
                     Thread.sleep(2000);
@@ -236,6 +249,14 @@ public class Server {
 
         public int getPlayerScore() {
             return playerScore;
+        }
+
+        public BufferedReader getIn() {
+            return in;
+        }
+
+        public void setPlayerScore(int playerScore) {
+            this.playerScore = playerScore;
         }
     }
 }

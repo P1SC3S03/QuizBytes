@@ -1,23 +1,22 @@
 package academy.mindswap.server.questions;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 public class Question {
     private String question;
     private String correctAnswer;
-    private List<String> answers;
+    private LinkedList<String> answers;
 
-    public Question(){
-        this.answers = new ArrayList<>();
+    public Question() {
+        this.answers = new LinkedList<>();
     }
 
-    public List<String> getAnswers() {
-        return new ArrayList<>(answers);
+    public LinkedList<String> getAnswers() {
+        return answers;
     }
 
     public void setAnswers(String answer) {
-        this.answers.add(answer);
+        this.answers.add(answer + "\n");
     }
 
     public String getQuestion() {
@@ -36,7 +35,12 @@ public class Question {
         this.correctAnswer = answer;
     }
 
-    public boolean isCorrectAnswer(String ans){
+    public boolean isCorrectAnswer(String ans) {
         return correctAnswer.equals(ans);
+    }
+
+    @Override
+    public String toString() {
+        return "\n" + question + "\n" + answers.get(0) + answers.get(1) + answers.get(2) + "\n";
     }
 }

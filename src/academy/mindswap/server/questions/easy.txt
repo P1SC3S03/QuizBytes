@@ -1,6 +1,0 @@
-"What does JDK stand for?;(a)Just Doing Kunfu;(b)Java Development Kit;(c)Java Developers Kit;b" 
-"Why is Java not 100% Object-oriented?;(a)Because it has eight primitive data types;(b)Because he has no purpose in life;(c)Because a String is a primitive;a;"
-"What are the main concepts of OOPs in Java?;(a)Unimorphism, Impersonation, Encapsulation, Inheritance;(b)Abstraction, Insolation, Polymorphism, Encapsulation;(c)Inheritance,Encapsulation,Abstraction,Polymorphism;c;
-"Where are Strings stored?;(a)Somewhere in Stack;(b)Somewhere in Heap;(c)In Heap, in the String Pool;c"
-"What is a way to describe polymorphism?;(a)One interface, many implementations;(b)Harry Potter potion;(c)An evil spirit;a;"
-"Which syntax for class definition is wrong?;(a)class student{ };(b)student class{ };b"
