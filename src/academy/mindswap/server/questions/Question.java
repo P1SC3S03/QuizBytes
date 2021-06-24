@@ -9,12 +9,6 @@ public class Question {
     private List<String> answers;
 
     public Question(){
-
-    }
-
-    public Question(String question, String rightAnswer){
-        this.question = question;
-        this.correctAnswer = rightAnswer;
         this.answers = new ArrayList<>();
     }
 

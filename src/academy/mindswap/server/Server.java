@@ -2,6 +2,7 @@ package academy.mindswap.server;
 
 import academy.mindswap.server.commands.Command;
 import academy.mindswap.server.util.Messages;
+import jdk.swing.interop.SwingInterOpUtils;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -70,7 +71,8 @@ public class Server {
         sortTop10(); //CHECK IF IT IS SORTING THE LIST
 
         if (top10Scores.isEmpty()) {
-            playerHandler.send("There is no top players yet. You are lucky! ;)");
+            playerHandler.send(Messages.NO_TOP_PLAYERS);
+            return;
         }
 
         for (int i = 0; i < listLimit; i++) {
@@ -163,7 +165,6 @@ public class Server {
         }
 
         private void dealWithNoPlaying(String message) throws InterruptedException {
-
             switch (message) {
                 case "3":
                     send(Messages.COMMAND_LIST);
@@ -187,15 +188,16 @@ public class Server {
             }
         }
 
+
         private boolean isCommand(String message) {
             return message.startsWith("/");
         }
 
         private void dealWithCommand(String message) throws IOException {
 
-            switch(message){
+            switch (message) {
                 case "/quit":
-                    send(Messages.GOODBYE_IN_LOVE);
+                    send(Messages.GOODBYE_MESSAGE);
                     close();
                     break;
                 default:
