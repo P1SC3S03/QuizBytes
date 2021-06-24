@@ -97,6 +97,7 @@ public class Server {
         return playersHandlerList.stream()
                 .filter(clientConnectionHandler -> clientConnectionHandler.getName().equalsIgnoreCase(name))
                 .findFirst();
+                }
 */
 
     public class PlayerHandler implements Runnable {
@@ -142,7 +143,7 @@ public class Server {
                     play(message);
                 }
             } catch (IOException | InterruptedException e) {
-                System.err.println(Messages.CLIENT_ERROR + e.getMessage());
+                System.err.println(Messages.CLIENT_ERROR);
             }
         }
 
@@ -154,7 +155,7 @@ public class Server {
             Command command = Command.getCommandFromMessage(message);
 
             if (command == null) {
-                send(Messages.NO_SUCH_COMMAND);
+                send(Messages.INVALID_OPERATION_OR_COMMAND);
                 return;
             }
 

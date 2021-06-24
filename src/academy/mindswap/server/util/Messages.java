@@ -2,7 +2,8 @@ package academy.mindswap.server.util;
 
 public class Messages {
 
-    public static final String WELCOME_MESSAGE = "Hello " + playerName + "! Welcome to the funnest day of your life!" +
+    // falta resolver o placeholder
+    public static final String WELCOME_MESSAGE = "Hello %s! Welcome to the funnest day of your life!" +
             "I strongly advise you to check the game rules/key/commands before you start playing... " +
             "It/They might 'interest' you [If you know what I mean ^^]";
 
@@ -27,6 +28,10 @@ public class Messages {
             /steal -> Steal his points for the current round.
             /support -> Get emotional support from your BFF.
             """;
+
+    public static final String CLIENT_ERROR = "Something went wrong with this player connection";
+
+    public static final String DEFAULT_NAME = "Player: ";
 
 
 
