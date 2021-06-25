@@ -68,10 +68,11 @@ public class Player {
                     out.flush();
 
                     if (line.equals("/quit") || line.equals("0")) {
+                        Thread.sleep(100);
                         socket.close();
                         System.exit(0);
                     }
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                     System.out.println(Messages.SOCKET_ERROR);
                 }
             }

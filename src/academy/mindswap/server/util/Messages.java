@@ -19,6 +19,7 @@ public class Messages {
     public static final String INCORRECT_ANSWER = "Incorrect.\n";
     public static final String NO_TOP_PLAYERS = "There are no top players yet. You are lucky! ;) \n";
     public static final String WAIT_FOR_ANOTHER_PLAYER = "Please wait for another player to join you.\n";
+    public static final String INSANE_MODE = "Hahaha! Did you really think this was going to be a 'normal quizz??'";
     public static final String MAIN_MENU = """
             MAIN MENU:
             1 -> Singleplayer

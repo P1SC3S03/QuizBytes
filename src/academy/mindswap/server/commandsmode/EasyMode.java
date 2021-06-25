@@ -9,17 +9,16 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class EasyMode implements CommandHandler {
-
     private final int difficultyScore = 1;
 
     @Override
-    public void execute(Server server, Server.PlayerHandler playerHandler) throws IOException, InterruptedException {
+    public void execute(Server server, Server.PlayerHandler playerHandler) throws IOException {
         runQuestions(server, playerHandler, loadEasyQuestions());
     }
 
     public LinkedList<Question> loadEasyQuestions() throws IOException {
-        FilesLoad fr = new FilesLoad();
-        LinkedList<Question> questions = fr.LoadQuestionsFromFile("resources/easy.txt");
+        FilesLoad fileReader = new FilesLoad();
+        LinkedList<Question> questions = fileReader.LoadQuestionsFromFile("resources/easy.txt");
         return questions;
     }
 

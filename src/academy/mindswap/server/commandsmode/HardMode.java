@@ -10,14 +10,15 @@ import java.util.LinkedList;
 
 public class HardMode implements CommandHandler{
     private int difficultyScore = 10;
+
     @Override
-    public void execute(Server server, Server.PlayerHandler playerHandler) throws IOException, InterruptedException {
+    public void execute(Server server, Server.PlayerHandler playerHandler) throws IOException {
         runQuestions(server, playerHandler, loadHardQuestions());
     }
 
     public LinkedList<Question> loadHardQuestions() throws IOException{
-        FilesLoad fr = new FilesLoad();
-        LinkedList<Question> questions = fr.LoadQuestionsFromFile("resources/hard.txt");
+        FilesLoad fileReader = new FilesLoad();
+        LinkedList<Question> questions = fileReader.LoadQuestionsFromFile("resources/hard.txt");
         return questions;
     }
 
@@ -38,5 +39,4 @@ public class HardMode implements CommandHandler{
         playerHandler.send("Your score is " + playerHandler.getPlayerScore() + " out of"
                 + questions.size() + "!");
     }
-
 }

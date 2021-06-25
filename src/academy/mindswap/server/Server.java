@@ -186,8 +186,8 @@ public class Server {
         private void dealWithMainMenu(String message) throws InterruptedException, IOException {
             switch (message) {
                 case "1":
-                    SinglePlayer singleplayer = new SinglePlayer();
-                    singleplayer.play(Server.this, this);
+                    SinglePlayer singlePlayer = new SinglePlayer();
+                    singlePlayer.play(Server.this, this);
                     break;
                 case "2":
                     multiPLayerList.add(this);
@@ -207,11 +207,11 @@ public class Server {
                     break;
                 case "0":
                     send(Messages.GOODBYE_MESSAGE);
+                    Thread.sleep(10);
                     close();
                     break;
                 default:
                     send(Messages.READ_RULES);
-                    Thread.sleep(2000);
                     send(Messages.MAIN_MENU);
                     break;
             }
@@ -222,7 +222,7 @@ public class Server {
             return message.startsWith("/");
         }
 
-        private void dealWithCommand(String message) throws IOException {
+        private void dealWithCommand(String message) throws IOException, InterruptedException {
 
             switch (message) {
                 case "/quit":
@@ -234,6 +234,8 @@ public class Server {
                     break;
                 default:
                     send(Messages.READ_RULES);
+                    Thread.sleep(2000);
+                    send(Messages.MAIN_MENU);
                     break;
             }
         }
@@ -272,6 +274,10 @@ public class Server {
 
         public BufferedReader getIn() {
             return in;
+        }
+
+        public Socket getPlayerSocket() {
+            return playerSocket;
         }
 
         public void setPlayerScore(int playerScore) {
