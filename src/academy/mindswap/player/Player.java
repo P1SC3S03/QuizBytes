@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class Player {
 
-    String name;
+    private String name;
 
     public Player(String name){
         this.name = name;
@@ -40,6 +40,9 @@ public class Player {
 
             System.out.println(line);
         }
+    }
+    public String getName() {
+        return name;
     }
 
     private class KeyboardHandler implements Runnable {

@@ -11,16 +11,8 @@ public class Question {
         this.answers = new LinkedList<>();
     }
 
-    public LinkedList<String> getAnswers() {
-        return answers;
-    }
-
     public void setAnswers(String answer) {
         this.answers.add(answer + "\n");
-    }
-
-    public String getQuestion() {
-        return question;
     }
 
     public void setQuestion(String question) {
@@ -33,10 +25,6 @@ public class Question {
 
     public void setCorrectAnswer(String answer) {
         this.correctAnswer = answer;
-    }
-
-    public boolean isCorrectAnswer(String ans) {
-        return correctAnswer.equals(ans);
     }
 
     @Override

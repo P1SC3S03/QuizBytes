@@ -1,10 +1,8 @@
 package academy.mindswap.server;
 
-import academy.mindswap.server.commands.Command;
-import academy.mindswap.server.commands.MultiplayerCommand;
-import academy.mindswap.server.commands.SingleplayerCommand;
+import academy.mindswap.server.gametype.MultiPlayer;
+import academy.mindswap.server.gametype.SinglePlayer;
 import academy.mindswap.server.util.Messages;
-import jdk.swing.interop.SwingInterOpUtils;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -55,7 +53,10 @@ public class Server {
         //(playerHandler.getName(), Messages.CLIENT_ENTERED_CHAT);
     }
 
-    public synchronized void broadcast(String name, String message) {
+    public void broadcast(String message) throws IOException{
+        for (PlayerHandler multiplayer : multiPLayerList){
+            multiplayer.send(message);
+        }
 
     }  //TODO -> Select the playerHandlers pair in game to send academy.mindswap.player.server.questions to players.
 
@@ -137,47 +138,41 @@ public class Server {
                 while (!playerSocket.isClosed()) {
                     message = in.readLine();
 
-                    if (!wantsToPlay(message)) {
-                        dealWithNoPlaying(message);
-                        continue;
-                    }
-
                     if (isCommand(message)) {
                         dealWithCommand(message);
                         continue;
                     }
-
                     if (message.equals("")) {
                         continue;
                     }
+
+                    dealWithMainMenu(message);
+
                     //play(message);
                 }
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException |
+                    InterruptedException e) {
                 System.err.println(Messages.CLIENT_ERROR);
             }
         }
 
-        private boolean wantsToPlay(String message) {
-            return message.equals("1");
-        }
-
-        /*private void play(String message) {
-            Command command = Command.getCommandFromMessage(message);
-
-            if (command == null) {
-                send(Messages.INVALID_OPERATION_OR_COMMAND);
-                return;
-            }
-
-            command.getHandler().execute(Server.this, this);
+        /*//CHANGED
+        public void oneEasyMultiplayerQuestion() throws IOException {
+            FilesLoad fileReader = new FilesLoad();
+            LinkedList<Question> questions = fileReader.LoadQuestionsFromFile("resources/easy.txt");
+            send(questions.getFirst().toString());
         }*/
 
-        private void dealWithNoPlaying(String message) throws InterruptedException, IOException {
+        private void dealWithMainMenu(String message) throws InterruptedException, IOException {
             switch (message) {
+                case "1":
+                    SinglePlayer singleplayer = new SinglePlayer();
+                    singleplayer.play(Server.this, this);
+                    break;
                 case "2":
                     multiPLayerList.add(this);
-                    MultiplayerCommand multiPlayerCommand = new MultiplayerCommand();
-                    multiPlayerCommand.execute(Server.this, this);
+                    MultiPlayer multiPlayer = new MultiPlayer();
+                    multiPlayer.play(Server.this, this);
                     break;
                 case "3":
                     send(Messages.COMMAND_LIST);
@@ -212,6 +207,9 @@ public class Server {
                 case "/quit":
                     send(Messages.GOODBYE_MESSAGE);
                     close();
+                    break;
+                case "/menu":
+                    send(Messages.MAIN_MENU);
                     break;
                 default:
                     send(Messages.READ_RULES);

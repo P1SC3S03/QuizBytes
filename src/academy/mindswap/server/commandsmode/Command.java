@@ -1,9 +1,9 @@
-package academy.mindswap.server.commands;
+package academy.mindswap.server.commandsmode;
 
 public enum Command {
 
-    SINGLE_PLAYER_MODE("1", new SingleplayerCommand()),
-    MULTI_PLAYER_MODE("2", new MultiplayerCommand());
+    EASY_MODE("1", new EasyMode()),
+    HARD_MODE("2", new HardMode());
 
     private String message;
     private CommandHandler handler;
@@ -13,9 +13,9 @@ public enum Command {
         this.handler = handler;
     }
 
-    public static Command getCommandFromMessage(String message) {
+    public static Command getCommandFromMode(String mode) {
         for (Command command : values()) {
-            if (message.equals(command.message)) {
+            if (mode.equals(command.message)) {
                 return command;
             }
         }
@@ -25,5 +25,4 @@ public enum Command {
     public CommandHandler getHandler() {
         return handler;
     }
-
 }

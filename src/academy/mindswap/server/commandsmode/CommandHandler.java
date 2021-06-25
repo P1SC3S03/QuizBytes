@@ -1,4 +1,4 @@
-package academy.mindswap.server.commands;
+package academy.mindswap.server.commandsmode;
 
 import academy.mindswap.server.Server;
 

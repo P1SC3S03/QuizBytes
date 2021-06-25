@@ -8,19 +8,22 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class FilesLoad {
-    public LinkedList LoadQuestionsFile(String path) throws IOException {
+
+    public LinkedList LoadQuestionsFromFile(String path) throws IOException {
         LinkedList<Question> listOfQuestions = new LinkedList<>();
-        String strCurrentLine;
+        String line;
         BufferedReader reader = new BufferedReader(new FileReader(path));
-        String[] strs = null;
-        while ((strCurrentLine = reader.readLine()) != null) {
-            strs = strCurrentLine.split(";");
+        String[] questionStructure = null;
+
+        while ((line = reader.readLine()) != null) {
+            questionStructure = line.split(";");
             Question question = new Question();
-            question.setQuestion(strs[0]);
-            for (int i = 1; i < 4; i++) {
-                question.setAnswers(strs[i]);
+            question.setQuestion(questionStructure[0]);
+
+            for (int i = 1; i < questionStructure.length-1; i++) {
+                question.setAnswers(questionStructure[i]);
             }
-            question.setCorrectAnswer(strs[4]);
+            question.setCorrectAnswer(questionStructure[questionStructure.length-1]);
             listOfQuestions.add(question);
         }
         return listOfQuestions;
