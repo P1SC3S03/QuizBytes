@@ -53,12 +53,12 @@ public class Server {
         //(playerHandler.getName(), Messages.CLIENT_ENTERED_CHAT);
     }
 
-    public void broadcast(String message) throws IOException{
+    /*public void broadcast(String message) throws IOException{
         for (PlayerHandler multiplayer : multiPLayerList){
             multiplayer.send(message);
         }
 
-    }  //TODO -> Select the playerHandlers pair in game to send academy.mindswap.player.server.questions to players.
+    }  //TODO -> Select the playerHandlers pair in game to send academy.mindswap.player.server.questions to players.*/
 
     public void sortTop10() {
         top10Scores.sort(new Comparator<Integer>() {
@@ -100,8 +100,27 @@ public class Server {
         playersHandlerList.remove(playerHandler);
     }
 
+    //VER ESTE MÉTODO -> NOTIFY NOT WORKING
+    private void checkMultiPlayer(PlayerHandler handler) {
+        if (getMultiPlayerList().size() % 2 != 0) {
+            handler.send(Messages.WAIT_FOR_ANOTHER_PLAYER);
+            while (getMultiPlayerList().size() < 2) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public List<PlayerHandler> getMultiPlayerList() {
         return multiPLayerList;
+    }
+
+    public int defineHighestScore() {
+        this.highestScore = top10Scores.getFirst();
+        return highestScore;
     }
 
    /* public Optional<PlayerHandler> getClientByName(String name) {
@@ -163,6 +182,7 @@ public class Server {
             send(questions.getFirst().toString());
         }*/
 
+
         private void dealWithMainMenu(String message) throws InterruptedException, IOException {
             switch (message) {
                 case "1":
@@ -171,6 +191,7 @@ public class Server {
                     break;
                 case "2":
                     multiPLayerList.add(this);
+                    checkMultiPlayer(this);
                     MultiPlayer multiPlayer = new MultiPlayer();
                     multiPlayer.play(Server.this, this);
                     break;

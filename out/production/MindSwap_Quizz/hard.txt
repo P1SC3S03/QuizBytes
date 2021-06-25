@@ -1,11 +1,11 @@
 What do you call the languages that support classes but not polymorphism?;(a)Class based language;(b)Procedure Oriented language;(c)Object-based language;(d)If classes are supported, polymorphism will always be supported;c
-"If data members are private, what can we do to access them from the class object?;(a)Create public member functions to access those data members;(b)Create private member functions to access those data members;(c)Create protected member functions to access those data members;(d)Private data members can never be accessed from outside the class;a"
-"While using encapsulation, which among the following is possible?;(a)Code modification can be additional overhead;(b)Data member’s data type can be changed without changing any other code;(c)Data member’s type can’t be changed, or whole code have to be changed;(d)Member functions can be used to change the data type of data members;b"
-"Which feature can be implemented using encapsulation?;(a)Inheritance;(b)Abstraction;(c)Polymorphism;(d)Overloading;b"
-"Which among the following violates the principle of encapsulation almost always?;(a)Local variables;;(b)Public variables;(c)Global variables;(d)Array variables;b"
-"Which is not feature of OOP in general definitions?;(a)Code reusability;(b)Modularity;(c)Duplicate/Redundant data;(d)Efficient Code;c"
-"Which Feature of OOP illustrated the code reusability?;(a)Polymorphism;(b)Abstraction;(c)Encapsulation;(d)Inheritance;d"
-"When did the OOP concept first came into picture?;(a)1970’s;(b)1980’s;(c)1993;(d)1995;a"
-"Size of a class is: ;(a)Sum of the size of all the variables declared inside the class;(b)Sum of the size of all the variables along with inherited variables in the class;(c)Size of the largest size of variable;(d)Classes doesn’t have any size;d"
-"What is the scope of a class nested inside another class?;(a)Protected scope;(b)Private scope;(c)Global scope;(d)Depends on access specifier and inheritance used;d"
+If data members are private, what can we do to access them from the class object?;(a)Create public member functions to access those data members;(b)Create private member functions to access those data members;(c)Create protected member functions to access those data members;(d)Private data members can never be accessed from outside the class;a
+While using encapsulation, which among the following is possible?;(a)Code modification can be additional overhead;(b)Data member’s data type can be changed without changing any other code;(c)Data member’s type can’t be changed, or whole code have to be changed;(d)Member functions can be used to change the data type of data members;b
+Which feature can be implemented using encapsulation?;(a)Inheritance;(b)Abstraction;(c)Polymorphism;(d)Overloading;b
+Which among the following violates the principle of encapsulation almost always?;(a)Local variables;;(b)Public variables;(c)Global variables;(d)Array variables;b
+Which is not feature of OOP in general definitions?;(a)Code reusability;(b)Modularity;(c)Duplicate/Redundant data;(d)Efficient Code;c
+Which Feature of OOP illustrated the code reusability?;(a)Polymorphism;(b)Abstraction;(c)Encapsulation;(d)Inheritance;d
+When did the OOP concept first came into picture?;(a)1970’s;(b)1980’s;(c)1993;(d)1995;a
+Size of a class is: ;(a)Sum of the size of all the variables declared inside the class;(b)Sum of the size of all the variables along with inherited variables in the class;(c)Size of the largest size of variable;(d)Classes doesn’t have any size;d
+What is the scope of a class nested inside another class?;(a)Protected scope;(b)Private scope;(c)Global scope;(d)Depends on access specifier and inheritance used;d
 
