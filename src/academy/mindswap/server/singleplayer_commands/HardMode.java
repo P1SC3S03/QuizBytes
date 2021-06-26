@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 public class HardMode implements CommandHandler{
     private int difficultyScore = 10;
+    private int correctAnswers;
 
     @Override
     public void execute(Server server, Server.PlayerHandler playerHandler) throws IOException, InterruptedException {
@@ -29,22 +30,26 @@ public class HardMode implements CommandHandler{
             playerHandler.send(question.toString());
             String answer = playerHandler.getIn().readLine();
 
-            if(answer.equals("/menu") || answer.equals("/quit")){
+            if (answer.equals("/menu") || answer.equals("/quit")) {
                 playerHandler.dealWithCommand(answer);
                 return;
+            }
+            if (answer.equals("/support")) {
+                playerHandler.dealWithCommand(answer);
+                continue;
             }
             if (answer.equals(question.getCorrectAnswer())) {
                 playerHandler.setPlayerScore(playerHandler.getPlayerScore() + difficultyScore);
                 playerHandler.send(Messages.CORRECT_ANSWER);
-                playerHandler.send(("" + playerHandler.getPlayerScore()));
+                correctAnswers++;
             } else {
-                if(playerHandler.isCommand(answer)){
-                playerHandler.dealWithCommand(answer);
-            }
+                if (playerHandler.isCommand(answer)) {
+                    playerHandler.dealWithCommand(answer);
+                }
                 playerHandler.send(Messages.INCORRECT_ANSWER);
             }
         }
-        playerHandler.send("Your score is " + playerHandler.getPlayerScore() + " out of "
-                + questions.size() + "!");
+        playerHandler.send("Your final score is " + playerHandler.getPlayerScore() + ".\n" + "You got " + correctAnswers
+                + " correct answers out of " + questions.size() + "!");
     }
 }

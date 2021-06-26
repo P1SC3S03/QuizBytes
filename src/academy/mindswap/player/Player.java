@@ -7,15 +7,8 @@ import java.net.Socket;
 
 public class Player {
 
-    private String name;
-
-    public Player(String name){
-        this.name = name;
-    }
-
-
     public static void main(String[] args) {
-        Player player = new Player("Soraia");
+        Player player = new Player();
         try {
             player.start("localhost", 8080);
         } catch (IOException e) {
@@ -40,9 +33,6 @@ public class Player {
 
             System.out.println(line);
         }
-    }
-    public String getName() {
-        return name;
     }
 
     private class KeyboardHandler implements Runnable {

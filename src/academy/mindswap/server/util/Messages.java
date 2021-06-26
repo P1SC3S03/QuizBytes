@@ -9,11 +9,6 @@ public class Messages {
     public static final String INVALID_OPERATION_OR_COMMAND = "Invalid option or command.\n";
 
     //Normal Messages
-    public static final String WELCOME_MESSAGE = "Hello! Welcome to the funnest day of your life! " +
-            "I strongly advise you to check the game commands before you start playing... " +
-            "They might 'interest' you [If you know what I mean ^^] Have fun! :) \n";
-
-    public static final String GOODBYE_MESSAGE = "HAHAHA I knew from the start you were a quitter... BUUUUHHHH\n";
     public static final String DEFAULT_NAME = "Player: ";
     public static final String CORRECT_ANSWER = "Correct!\n";
     public static final String INCORRECT_ANSWER = "Incorrect.\n";
@@ -21,7 +16,7 @@ public class Messages {
     public static final String WAIT_FOR_ANOTHER_PLAYER = "Please wait for another player to join you.\n";
 
     public static final String MAIN_MENU = """
-            MAIN MENU:
+            \nMAIN MENU:
             1 -> Singleplayer
             2 -> Multiplayer
             3 -> Commands
@@ -30,20 +25,29 @@ public class Messages {
 
     //REVISE!!!!!!!!!!!!!
     public static final String COMMAND_LIST = """
-            COMMAND LIST:
-            /quit -> Quits the game.
-            /menu -> Go back to main menu.
-            /freeze -> Freeze your opponent for a round.
-            /steal -> Steal his points for the current round.
-            /support -> Get emotional support from your BFF.
-            \n""";
+            \nCOMMAND LIST:
+            /quit -> Quits the game
+            /menu -> Go back to main menu
+            /freeze -> Freeze your opponent for a round
+            /steal -> Steal his points for the current round
+            /support -> Get emotional support from 'Byty' the Server\n
+            """;
 
     public static final String SINGLEPLAYER_MENU = """
-            MAIN MENU:
+            \nMAIN MENU:
             1 -> Easy
-            2 -> Hard
+            2 -> Hard\n
             """;
+
     //Fun Messages
+    public static final String WELCOME_SERVER = "\n\n\n\n\n\n\n\n\n" +
+            "   ______ \n" +
+            "  /     /| \n" +
+            " /     /#|-----------(Hello! I'm Byty the Server! Welcome to the funnest day of your life!\n" +
+            "/_____/##|           I strongly advise you to check the game commands before you start playing...\n" +
+            "|     |##/           They might 'interest' you [If you know what I mean ^^])\n" +
+            "|     |#/\n"+
+            "|_____|/ \n\n";
 
     public static final String READ_RULES = "" +
             "   ______ \n" +
@@ -54,47 +58,45 @@ public class Messages {
             "|     |#/\n"+
             "|_____|/ \n";
 
-    public static final String SLEEPING_SERVER = "" +
+    public static final String EMOTIONAL_SUPPORT = "" +
             "   ______ \n" +
             "  /     /| \n" +
-            " /     /#|--------(ZZZZZZzzzzZZZZZzzzzzzzzz)\n" +
+            " /     /#|--------(If at first you don't succeed, call it Version 1.0)\n" +
+            "/_____/##|\n"+
+            "|     |##/\n"+
+            "|     |#/\n"+
+            "|_____|/ \n";
+
+    public static final String LEVEL_CHANGE = "" +
+            "   ______ \n" +
+            "  /     /| \n" +
+            " /     /#|--------(Congrats! You are smarter than a 6 year old... Lets spice things up, shall we? ^^)\n" +
             "/_____/##|\n"+
             "|     |##/\n"+
             "|     |#/\n"+
             "|_____|/ \n";
 
 
-    public static final String WELCOME_SERVER = "" +
+        public static final String INSANE_MODE =  "" +
             "   ______ \n" +
             "  /     /| \n" +
-            " /     /#|-----------(Hello! Welcome to the funnest day of your life!\"\n" +
-            "/_____/##|           I strongly advise you to check the game rules/key/commands before you start playing...\n" +
-            "|     |##/           It/They might 'interest' you [If you know what I mean ^^])\n" +
-            "|     |#/\n"+
-            "|_____|/ \n";
-
-    public static final String INSANE_MODE =  "" +
-            "   ______ \n" +
-            "  /     /| \n" +
-            " /     /#|--------(Hahaha! Did you really think this was going to be a 'normal quizz??')\n" +
+            " /     /#|--------(Hahahaha! Did you really think this was going to be a 'normal quizz??')\n" +
             "/_____/##|\n"+
             "|     |##/\n"+
             "|     |#/\n"+
             "|_____|/ \n";
 
-
-    public static final String HOOKED = "  " +
-            "          FISHKISSFISHKIS               \n" +
-            "       SFISHKISSFISHKISSFISH            F\n" +
-            "    ISHK   ISSFISHKISSFISHKISS         FI\n" +
-            "  SHKISS   FISHKISSFISHKISSFISS       FIS\n" +
-            "HKISSFISHKISSFISHKISSFISHKISSFISH    KISS\n" +
-            "  FISHKISSFISHKISSFISHKISSFISHKISS  FISHK\n" +
-            "      SSFISHKISSFISHKISSFISHKISSFISHKISSF\n" +
-            "  ISHKISSFISHKISSFISHKISSFISHKISSF  ISHKI\n" +
-            "SSFISHKISSFISHKISSFISHKISSFISHKIS    SFIS\n" +
-            "  HKISSFISHKISSFISHKISSFISHKISS       FIS\n" +
-            "    HKISSFISHKISSFISHKISSFISHK         IS\n" +
-            "       SFISHKISSFISHKISSFISH            K\n" +
-            "         ISSFISHKISSFISHK               ";
+    public static final String GOODBYE_MESSAGE = "" +
+            "   ______ \n" +
+            "  /     /| \n" +
+            " /     /#|--------(Pfff... I knew from the start you were a quitter... BUUUUUUUHHH!!)\n" +
+            "/_____/##|\n"+
+            "|     |##/\n"+
+            "|     |#/\n"+
+            "|_____|/ \n";
 }
+
+/*"You are now the top player.But... Are you happy with your miserable result?"
+"Try answering now smart pants"
+"You are now the top player! But... Are you happy with your life?"*/
+

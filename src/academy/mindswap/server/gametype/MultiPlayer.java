@@ -71,7 +71,7 @@ public class MultiPlayer {
             } else {
                 loadInsaneQuestions();
                 difficultyScore = 5;
-                int insaneScore = Integer.MAX_VALUE;                  //isto depende do timer
+                int insaneScore = Integer.MAX_VALUE;
                 playerHandler.send(Messages.INSANE_MODE);
                 Thread.sleep(7000);
                 timer.setSeconds(timer.getSeconds() + 7);
@@ -90,36 +90,23 @@ public class MultiPlayer {
     public void askQuestions(Timer timer, Server server, Server.PlayerHandler playerHandler, int difficultyScore, int maxCorrectScore) throws IOException, InterruptedException {
         for (Question question : questions) {
 
-//            Thread answersThread = null;
-//          ReceiveAnswer receiveAnswer = null;
-
             while (timer.getSeconds() > 0) {
 
                 String questionBuild = question.toString() + "\n";
                 header(timer, server, playerHandler);
                 playerHandler.send(questionBuild);
-//                String answer =
 
-//                if (receiveAnswer == null) {
-//                    receiveAnswer = new ReceiveAnswer(playerHandler);
-//                    answersThread = new Thread(receiveAnswer);
-//                    answersThread.start();
-//                }else{
-//                    answer = receiveAnswer.getAnswer();
-//                    if(answer == null){
-//                        continue;
-//                    }else{
-//                        receiveAnswer.killFlag();
-//                        receiveAnswer = null;
-//                    }
-//                }
+                    String answer = playerHandler.getIn().readLine();
+                    Thread.sleep(10);
+                    answeredQuestions++;
 
-                String answer = playerHandler.getIn().readLine();
-                answeredQuestions++;
-
-                if(answer.equals("/menu") || answer.equals("/quit")){
+                if (answer.equals("/menu") || answer.equals("/quit")) {
                     playerHandler.dealWithCommand(answer);
                     return;
+                }
+                if (answer.equals("/support")) {
+                    playerHandler.dealWithCommand(answer);
+                    continue;
                 }
                 if (answer.equals(question.getCorrectAnswer())) {
                     playerHandler.setPlayerScore(playerHandler.getPlayerScore() + difficultyScore); // add score by difficulty
@@ -132,8 +119,10 @@ public class MultiPlayer {
                     }
 
                 } else {
-                    playerHandler.send(Messages.INCORRECT_ANSWER);
-                    Thread.sleep(500);
+                    if (!answer.equals("")){
+                        playerHandler.send(Messages.INCORRECT_ANSWER);
+                        Thread.sleep(500);
+                    }
                 }
                 break;
             }
@@ -151,8 +140,8 @@ public class MultiPlayer {
 
     //TODO definir quantas questões
     public void gameOver(Server server, Server.PlayerHandler playerHandler) {
-        playerHandler.send("GAME OVER!\nYour final score is " + playerHandler.getPlayerScore() + ".\n" + "You got "
-                + correctAnsweredQuestions + " correct out of " + answeredQuestions + "!");
+        playerHandler.send("Your final score is " + playerHandler.getPlayerScore() + ".\n" + "You got "
+                + correctAnsweredQuestions + " correct answers out of " + answeredQuestions + "!");
         server.addScoreToList(playerHandler);
         server.defineHighestScore();
         //e voltar ao menu?

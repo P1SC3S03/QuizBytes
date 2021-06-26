@@ -13,9 +13,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private final List<PlayerHandler> playersHandlerList; //List or Double Array ???
     private final LinkedList<PlayerHandler> multiPLayerList;
-    private final int listLimit = 10;
     private ServerSocket serverSocket;
     private ExecutorService threadPool;
     private int port;
@@ -24,7 +22,6 @@ public class Server {
 
 
     public Server() {
-        playersHandlerList = new LinkedList<>();
         port = 8080;
         top10Scores = new LinkedList<>();
         multiPLayerList = new LinkedList<>();
@@ -52,28 +49,14 @@ public class Server {
 
     private void acceptConnection(int numberOfConnections) throws IOException {
         Socket clientSocket = serverSocket.accept();
-        threadPool.submit(new PlayerHandler(clientSocket, Messages.DEFAULT_NAME + numberOfConnections)); //VER CONSTRUTOR DO PLAYERHANDLER
+        threadPool.submit(new PlayerHandler(clientSocket, Messages.DEFAULT_NAME + numberOfConnections));
     }
-
-    private synchronized void addPlayerHandler(PlayerHandler playerHandler) {   //If for Array one way if for list another.
-        playersHandlerList.add(playerHandler);
-        playerHandler.send(Messages.WELCOME_MESSAGE);
-        playerHandler.send(Messages.MAIN_MENU);
-        //(playerHandler.getName(), Messages.CLIENT_ENTERED_CHAT);
-    }
-
-    /*public void broadcast(String message) throws IOException{
-        for (PlayerHandler multiplayer : multiPLayerList){
-            multiplayer.send(message);
-        }
-
-    }  //TODO -> Select the playerHandlers pair in game to send academy.mindswap.player.server.questions to players.*/
 
     public void sortTop10() {
         top10Scores.sort(new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
-                return o1.compareTo(o2);
+                return o2.compareTo(o1);
             }
         });
     }
@@ -82,7 +65,6 @@ public class Server {
         String message = "";
         int counter = 1;
 
-        //sortTop10(); //CHECK IF IT IS SORTING THE LIST
         if (top10Scores.isEmpty()) {
             playerHandler.send(Messages.NO_TOP_PLAYERS);
             return;
@@ -96,25 +78,24 @@ public class Server {
     }
 
     public void addScoreToList(PlayerHandler playerHandler) {
-        //GUARANTEE SORTED MAJOR TO MINOR!
         top10Scores.addLast(playerHandler.playerScore);
-//        sortTop10();
+        sortTop10();
     }
 
-    public synchronized void removePlayerHandler(PlayerHandler playerHandler) {
-        playersHandlerList.remove(playerHandler);
+    public synchronized void removePlayerHandlerFromMultiPlayerList(PlayerHandler playerHandler) {
+        multiPLayerList.remove(playerHandler);
     }
 
     private void checkMultiPlayer(PlayerHandler handler) {
         if (getMultiPlayerList().size() % 2 != 0) {
             handler.send(Messages.WAIT_FOR_ANOTHER_PLAYER);
-            while (getMultiPlayerList().size() < 2) {
+            while (getMultiPlayerList().size() % 2 != 0) {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
+           }
         }
     }
 
@@ -129,12 +110,6 @@ public class Server {
     public int getHighestScore() {
         return highestScore;
     }
-    /* public Optional<PlayerHandler> getClientByName(String name) {
-        return playersHandlerList.stream()
-                .filter(clientConnectionHandler -> clientConnectionHandler.getName().equalsIgnoreCase(name))
-                .findFirst();
-                }
-*/
 
     public class PlayerHandler implements Runnable {
 
@@ -155,7 +130,13 @@ public class Server {
 
         @Override
         public void run() {
-            addPlayerHandler(this);
+            send(Messages.WELCOME_SERVER);
+            try {
+                Thread.sleep(15000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            send(Messages.MAIN_MENU);
 
             try {
                 in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
@@ -170,54 +151,13 @@ public class Server {
                     if (message.equals("")) {
                         continue;
                     }
-
                     dealWithMainMenu(message);
-
-                    //play(message);
                 }
             } catch (IOException |
                     InterruptedException e) {
                 System.err.println(Messages.CLIENT_ERROR);
             }
         }
-
-//        private class ReceiveAnswer implements Runnable {
-//
-//            private Server.PlayerHandler playerHandler;
-//            private String answer = null;
-//            private boolean gotMessage;
-//
-//            public ReceiveAnswer(Server.PlayerHandler playerHandler) {
-//                this.playerHandler = playerHandler;
-//            }
-//
-//            public void run() {
-//                try {
-//                    answer = playerHandler.getIn().readLine();
-//                    while(!gotMessage){
-//
-//                    }
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            public void killFlag(){
-//                gotMessage = true;
-//            }
-//            public String getAnswer() {
-//                return answer;
-//            }
-//        }
-
-        /*//CHANGED
-        public void oneEasyMultiplayerQuestion() throws IOException {
-            FilesLoad fileReader = new FilesLoad();
-            LinkedList<Question> questions = fileReader.LoadQuestionsFromFile("resources/easy.txt");
-            send(questions.getFirst().toString());
-        }*/
-
 
         private void dealWithMainMenu(String message) throws InterruptedException, IOException {
             switch (message) {
@@ -226,6 +166,7 @@ public class Server {
                     singlePlayer.play(Server.this, this);
                     break;
                 case "2":
+                    playerScore = 0;
                     multiPLayerList.add(this);
                     checkMultiPlayer(this);
                     MultiPlayer multiPlayer = new MultiPlayer();
@@ -268,10 +209,14 @@ public class Server {
                 case "/menu":
                     send(Messages.MAIN_MENU);
                     break;
+                case "/support":
+                    send(Messages.EMOTIONAL_SUPPORT);
+                    Thread.sleep(3000);
+                    break;
                 default:
                     send(Messages.READ_RULES);
                     Thread.sleep(2000);
-                    //send(Messages.MAIN_MENU);
+                    send(Messages.MAIN_MENU);
                     break;
             }
         }
@@ -289,19 +234,15 @@ public class Server {
         public void close() {
             try {
                 addScoreToList(this);
-                removePlayerHandler(this);
+                removePlayerHandlerFromMultiPlayerList(this);
                 playerSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        public String getName() {
+        public String getName() { // Necessário??
             return name;
-        }
-
-        public String getMessage() {
-            return message;
         }
 
         public int getPlayerScore() {
