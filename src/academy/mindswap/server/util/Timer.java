@@ -12,7 +12,7 @@ public class Timer extends java.util.Timer implements Runnable {
     public Timer(int minutes, Socket socket) throws IOException {
         this.socket = socket;
         this.minutes = minutes - 1;
-        this.seconds = 10;
+        this.seconds = 60;
         out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
     }
 
@@ -41,18 +41,18 @@ public class Timer extends java.util.Timer implements Runnable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                try {
-                    out.write("\b\b\b\b"); //VERIFY
-                    out.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (minutes == 0 && seconds == 0) {
+//                try {
+//                    out.write("\b\b\b\b"); //VERIFY
+//                    out.flush();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+                if (seconds == 0) {
                     try {
                         out.write("Time is over!");
                         out.newLine();
                         out.flush();
-                        return;
+                        break;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

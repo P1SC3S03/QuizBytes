@@ -20,7 +20,7 @@ public class Server {
     private ExecutorService threadPool;
     private int port;
     private int highestScore;
-    private LinkedList <Integer> top10Scores;
+    private LinkedList<Integer> top10Scores;
 
 
     public Server() {
@@ -28,6 +28,15 @@ public class Server {
         port = 8080;
         top10Scores = new LinkedList<>();
         multiPLayerList = new LinkedList<>();
+    }
+
+    public static void main(String[] args) {
+        Server server = new Server();
+        try {
+            server.start(8080);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void start(int port) throws IOException {
@@ -75,24 +84,21 @@ public class Server {
 
         //sortTop10(); //CHECK IF IT IS SORTING THE LIST
         if (top10Scores.isEmpty()) {
-            System.out.println("Batatinhas com arroz");
             playerHandler.send(Messages.NO_TOP_PLAYERS);
             return;
         }
 
-        //for (int i = 0; i < listLimit; i++) {
-        for(int i : top10Scores) {
-            System.out.println("Hoje joga o Benfica e vai comer batatinhas!");
-            message += counter +": " + i + "\n"; // Equals to:  message += ....
+        for (int score : top10Scores) {
+            message += counter + ": " + score + " points" + "\n"; // Equals to:  message += ....
             counter++;
         }
         playerHandler.send(message);
-    } // COMANDO PARA A LISTA DOS TOP 10 JOGADORES
+    }
 
     public void addScoreToList(PlayerHandler playerHandler) {
         //GUARANTEE SORTED MAJOR TO MINOR!
         top10Scores.addLast(playerHandler.playerScore);
-        //sortTop10();
+//        sortTop10();
     }
 
     public synchronized void removePlayerHandler(PlayerHandler playerHandler) {
@@ -116,12 +122,14 @@ public class Server {
         return multiPLayerList;
     }
 
-    public int defineHighestScore() {
+    public void defineHighestScore() {
         this.highestScore = top10Scores.getFirst();
-        return highestScore;
     }
 
-   /* public Optional<PlayerHandler> getClientByName(String name) {
+    public int getHighestScore() {
+        return highestScore;
+    }
+    /* public Optional<PlayerHandler> getClientByName(String name) {
         return playersHandlerList.stream()
                 .filter(clientConnectionHandler -> clientConnectionHandler.getName().equalsIgnoreCase(name))
                 .findFirst();
@@ -173,6 +181,36 @@ public class Server {
             }
         }
 
+//        private class ReceiveAnswer implements Runnable {
+//
+//            private Server.PlayerHandler playerHandler;
+//            private String answer = null;
+//            private boolean gotMessage;
+//
+//            public ReceiveAnswer(Server.PlayerHandler playerHandler) {
+//                this.playerHandler = playerHandler;
+//            }
+//
+//            public void run() {
+//                try {
+//                    answer = playerHandler.getIn().readLine();
+//                    while(!gotMessage){
+//
+//                    }
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            public void killFlag(){
+//                gotMessage = true;
+//            }
+//            public String getAnswer() {
+//                return answer;
+//            }
+//        }
+
         /*//CHANGED
         public void oneEasyMultiplayerQuestion() throws IOException {
             FilesLoad fileReader = new FilesLoad();
@@ -216,11 +254,11 @@ public class Server {
         }
 
 
-        private boolean isCommand(String message) {
+        public boolean isCommand(String message) {
             return message.startsWith("/");
         }
 
-        private void dealWithCommand(String message) throws IOException, InterruptedException {
+        public void dealWithCommand(String message) throws IOException, InterruptedException {
 
             switch (message) {
                 case "/quit":
@@ -233,7 +271,7 @@ public class Server {
                 default:
                     send(Messages.READ_RULES);
                     Thread.sleep(2000);
-                    send(Messages.MAIN_MENU);
+                    //send(Messages.MAIN_MENU);
                     break;
             }
         }
@@ -282,4 +320,6 @@ public class Server {
             this.playerScore = playerScore;
         }
     }
+
+
 }

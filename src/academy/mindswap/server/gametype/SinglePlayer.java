@@ -1,7 +1,7 @@
 package academy.mindswap.server.gametype;
 
 import academy.mindswap.server.Server;
-import academy.mindswap.server.commandsmode.Command;
+import academy.mindswap.server.singleplayer_commands.Command;
 import academy.mindswap.server.util.Messages;
 
 import java.io.IOException;
