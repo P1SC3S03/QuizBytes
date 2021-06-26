@@ -25,7 +25,7 @@ public class Messages {
             1 -> Singleplayer
             2 -> Multiplayer
             3 -> Commands
-            4 -> Top 1O Scores
+            4 -> MultiPlayer: Top 1O Scores
             0 -> Exit\n""";
 
     //REVISE!!!!!!!!!!!!!

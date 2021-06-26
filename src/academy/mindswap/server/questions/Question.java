@@ -29,6 +29,11 @@ public class Question {
 
     @Override
     public String toString() {
-        return "\n" + question + "\n" + answers.get(0) + answers.get(1) + answers.get(2) + "\n";
+        String questionsStructure = "\n" + question + "\n";
+
+        for (int i = 0; i < answers.size(); i++){
+            questionsStructure += answers.get(i);
+        }
+        return questionsStructure;
     }
 }

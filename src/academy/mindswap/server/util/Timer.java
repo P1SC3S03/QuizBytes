@@ -1,10 +1,9 @@
 package academy.mindswap.server.util;
 
-import javax.swing.plaf.TableHeaderUI;
 import java.io.*;
 import java.net.Socket;
 
-public class Timer implements Runnable {
+public class Timer extends java.util.Timer implements Runnable {
     private int minutes;
     private int seconds;
     private BufferedWriter out;
@@ -13,6 +12,7 @@ public class Timer implements Runnable {
     public Timer(int minutes, Socket socket) throws IOException {
         this.socket = socket;
         this.minutes = minutes - 1;
+        this.seconds = 10;
         out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
     }
 
@@ -25,18 +25,17 @@ public class Timer implements Runnable {
             //while (seconds >= 0) {
                 seconds--;
                 setSeconds(seconds);
-                if (seconds == -1) {
-                    seconds = 9;
-                }
-                try {
+                /*if (seconds == -1) {
+                    seconds = 59;
+                }*/
+                /*try {
                     Thread.sleep(100);
                     out.write("Timer: " + minutes + ":" + seconds);
-                    out.newLine();
                     out.flush();
                     out.write("\b\b\b\b"); //VERIFY
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
-                }
+                }*/
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -49,7 +48,6 @@ public class Timer implements Runnable {
                     e.printStackTrace();
                 }
                 if (minutes == 0 && seconds == 0) {
-                    
                     try {
                         out.write("Time is over!");
                         out.newLine();
@@ -63,8 +61,8 @@ public class Timer implements Runnable {
         }
     }
 
-    public String getSeconds() {
-        return "" + seconds;
+    public int getSeconds() {
+        return seconds;
     }
 
     public void setSeconds(int seconds) {

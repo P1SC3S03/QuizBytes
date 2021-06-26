@@ -24,7 +24,7 @@ public class InsaneMode {
     public void runQuestions(Server server, Server.PlayerHandler playerHandler, LinkedList<Question> questions)
             throws IOException {
 
-            playerHandler.send(Messages.INSANE_MODE);
+        playerHandler.send(Messages.INSANE_MODE);
 
         for (Question question : questions) {
             playerHandler.send(question.toString());
@@ -37,7 +37,7 @@ public class InsaneMode {
                 playerHandler.send(Messages.INCORRECT_ANSWER);
             }
         }
-        playerHandler.send("Your score is " + playerHandler.getPlayerScore() + " out of"
+        playerHandler.send("Your score is " + playerHandler.getPlayerScore() + " out of "
                 + questions.size() + "!");
     }
 }

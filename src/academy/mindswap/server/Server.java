@@ -20,7 +20,7 @@ public class Server {
     private ExecutorService threadPool;
     private int port;
     private int highestScore;
-    private LinkedList<Integer> top10Scores;
+    private LinkedList <Integer> top10Scores;
 
 
     public Server() {
@@ -70,37 +70,35 @@ public class Server {
     }
 
     public void listOfTop10(PlayerHandler playerHandler) {
-        StringBuilder message = new StringBuilder();
+        String message = "";
         int counter = 1;
 
-        sortTop10(); //CHECK IF IT IS SORTING THE LIST
-
+        //sortTop10(); //CHECK IF IT IS SORTING THE LIST
         if (top10Scores.isEmpty()) {
+            System.out.println("Batatinhas com arroz");
             playerHandler.send(Messages.NO_TOP_PLAYERS);
             return;
         }
 
-        for (int i = 0; i < listLimit; i++) {
-            message.append(counter).append(":").append(top10Scores.get(i)).append("\n"); // Equals to:  message += ....
+        //for (int i = 0; i < listLimit; i++) {
+        for(int i : top10Scores) {
+            System.out.println("Hoje joga o Benfica e vai comer batatinhas!");
+            message += counter +": " + i + "\n"; // Equals to:  message += ....
             counter++;
         }
-        playerHandler.send(message.toString());
+        playerHandler.send(message);
     } // COMANDO PARA A LISTA DOS TOP 10 JOGADORES
 
     public void addScoreToList(PlayerHandler playerHandler) {
         //GUARANTEE SORTED MAJOR TO MINOR!
-        if (playerHandler.playerScore == 0) {
-            return;
-        }
         top10Scores.addLast(playerHandler.playerScore);
-        sortTop10();
+        //sortTop10();
     }
 
     public synchronized void removePlayerHandler(PlayerHandler playerHandler) {
         playersHandlerList.remove(playerHandler);
     }
 
-    //VER ESTE MÉTODO -> NOTIFY NOT WORKING
     private void checkMultiPlayer(PlayerHandler handler) {
         if (getMultiPlayerList().size() % 2 != 0) {
             handler.send(Messages.WAIT_FOR_ANOTHER_PLAYER);

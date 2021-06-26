@@ -36,7 +36,7 @@ public class EasyMode implements CommandHandler {
                 playerHandler.send(Messages.INCORRECT_ANSWER);
             }
         }
-        playerHandler.send("Your score is " + playerHandler.getPlayerScore() + " out of"
+        playerHandler.send("Your score is " + playerHandler.getPlayerScore() + " out of "
                 + questions.size() + "!");
     }
 }
