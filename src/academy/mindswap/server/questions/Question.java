@@ -29,7 +29,7 @@ public class Question {
 
     @Override
     public String toString() {
-        String questionsStructure = "\n" + question + "\n";
+        String questionsStructure = "\n" + question + "\n\n";
 
         for (int i = 0; i < answers.size(); i++){
             questionsStructure += answers.get(i);

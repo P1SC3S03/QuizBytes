@@ -1,4 +1,4 @@
-package academy.mindswap.server.commandsmode;
+package academy.mindswap.server.singleplayer_commands;
 
 public enum Command {
 
