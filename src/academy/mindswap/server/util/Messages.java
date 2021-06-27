@@ -14,6 +14,11 @@ public class Messages {
     public static final String INCORRECT_ANSWER = "Incorrect.\n";
     public static final String NO_TOP_PLAYERS = "There are no top players yet. You are lucky! ;) \n";
     public static final String WAIT_FOR_ANOTHER_PLAYER = "Please wait for another player to join you.\n";
+    public static final String HIT_ME = "Winner winner chicken dinner! I knew you hold read the commands! " +
+            "Time for it to pay off!\n";
+    public static final String STEAL = "Oh naughty naughty, but it paid off ^^\n";
+    public static final String GREEDY = "A poor person isn’t who has little, but who needs a lot...\n";
+
 
     public static final String MAIN_MENU = """
             \nMAIN MENU:
@@ -28,8 +33,8 @@ public class Messages {
             \nCOMMAND LIST:
             /quit -> Quits the game
             /menu -> Go back to main menu
-            /freeze -> Freeze your opponent for a round
-            /steal -> Steal his points for the current round
+            /hit me -> [MultiPlayer Only] If you feel extra lucky
+            /steal -> Steal someone's points
             /support -> Get emotional support from 'Byty' the Server\n
             """;
 

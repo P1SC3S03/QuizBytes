@@ -6,5 +6,5 @@ import java.io.IOException;
 
 public interface CommandHandler {
 
-    void execute(Server server, Server.PlayerHandler playerHandler) throws IOException, InterruptedException;
+    void execute(Server.PlayerHandler playerHandler) throws IOException, InterruptedException;
 }

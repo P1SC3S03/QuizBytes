@@ -107,6 +107,20 @@ public class Server {
         this.highestScore = top10Scores.getFirst();
     }
 
+    public int stealFromRandomPlayer(PlayerHandler playerHandler) {
+        int index = multiPLayerList.indexOf(playerHandler);
+        int randomPlayerIndex = index;
+        int stolenPoints;
+
+        while (randomPlayerIndex == index) {
+            randomPlayerIndex = (int) (Math.random() * (multiPLayerList.size()));
+        }
+        stolenPoints = multiPLayerList.get(randomPlayerIndex).getPlayerScore();
+        multiPLayerList.get(randomPlayerIndex).setPlayerScore(0);
+
+        return stolenPoints;
+    }
+
     public int getHighestScore() {
         return highestScore;
     }
@@ -132,7 +146,7 @@ public class Server {
         public void run() {
             send(Messages.WELCOME_SERVER);
             try {
-                Thread.sleep(15000);
+                Thread.sleep(1000); //CHANGE BACK
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -163,7 +177,7 @@ public class Server {
             switch (message) {
                 case "1":
                     SinglePlayer singlePlayer = new SinglePlayer();
-                    singlePlayer.play(Server.this, this);
+                    singlePlayer.play(this);
                     break;
                 case "2":
                     playerScore = 0;
@@ -213,9 +227,17 @@ public class Server {
                     send(Messages.EMOTIONAL_SUPPORT);
                     Thread.sleep(3000);
                     break;
+                case "/hit me":
+                    send(Messages.HIT_ME);
+                    Thread.sleep(5000);
+                    break;
+                case "/steal":
+                    send(Messages.STEAL);
+                    Thread.sleep(3000);
+                    break;
                 default:
                     send(Messages.READ_RULES);
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
                     send(Messages.MAIN_MENU);
                     break;
             }

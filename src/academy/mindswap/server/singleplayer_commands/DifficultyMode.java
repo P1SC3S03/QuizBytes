@@ -8,33 +8,27 @@ import academy.mindswap.server.util.Messages;
 import java.io.IOException;
 import java.util.LinkedList;
 
-public class EasyMode implements CommandHandler {
-    private final int difficultyScore = 1;
+public abstract class DifficultyMode {
+    private int difficultyScore;
     private int correctAnswers;
 
-    @Override
-    public void execute(Server server, Server.PlayerHandler playerHandler) throws IOException, InterruptedException {
-        runQuestions(server, playerHandler, loadEasyQuestions());
+    public DifficultyMode(int difficultyScore, int correctAnswers) {
+        this.difficultyScore = difficultyScore;
+        this.correctAnswers = correctAnswers;
     }
 
-    public LinkedList<Question> loadEasyQuestions() throws IOException {
-        FilesLoad fileReader = new FilesLoad();
-        LinkedList<Question> questions = fileReader.LoadQuestionsFromFile("resources/easy.txt");
-        return questions;
-    }
-
-    public void runQuestions(Server server, Server.PlayerHandler playerHandler, LinkedList<Question> questions)
+    public void runQuestions(Server.PlayerHandler playerHandler, LinkedList<Question> questions)
             throws IOException, InterruptedException {
 
         for (Question question : questions) {
             playerHandler.send(question.toString());
             String answer = playerHandler.getIn().readLine();
 
-            if(answer.equals("/menu") || answer.equals("/quit")){
+            if (answer.equals("/menu") || answer.equals("/quit")) {
                 playerHandler.dealWithCommand(answer);
                 return;
             }
-            if (answer.equals("/support")){
+            if (answer.equals("/support")) {
                 playerHandler.dealWithCommand(answer);
                 continue;
             }
@@ -43,11 +37,21 @@ public class EasyMode implements CommandHandler {
                 playerHandler.send(Messages.CORRECT_ANSWER);
                 correctAnswers++;
             } else {
-
+                if (playerHandler.isCommand(answer)) {
+                    playerHandler.dealWithCommand(answer);
+                }
                 playerHandler.send(Messages.INCORRECT_ANSWER);
             }
         }
         playerHandler.send("Your final score is " + playerHandler.getPlayerScore() + ".\n" + "You got " + correctAnswers
-                + " correct answers out of " + questions.size() + "!");
+                + " correct answers out of " + questions.size() + "!\n");
+        Thread.sleep(3000);
+        playerHandler.send(Messages.MAIN_MENU);
+    }
+
+    public LinkedList<Question> loadQuestions(String path) throws IOException {
+        FilesLoad fileReader = new FilesLoad();
+        LinkedList<Question> questions = fileReader.LoadQuestionsFromFile(path);
+        return questions;
     }
 }

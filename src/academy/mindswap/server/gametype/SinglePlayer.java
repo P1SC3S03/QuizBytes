@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class SinglePlayer {
 
-    public void play(Server server, Server.PlayerHandler playerHandler) throws IOException, InterruptedException {
+    public void play(Server.PlayerHandler playerHandler) throws IOException, InterruptedException {
         playerHandler.send(Messages.SINGLEPLAYER_MENU);
         String mode = playerHandler.getIn().readLine();
 
@@ -17,6 +17,6 @@ public class SinglePlayer {
         if (command == null) {
             playerHandler.send(Messages.INVALID_OPERATION_OR_COMMAND);   //RETURN????
         }
-        command.getHandler().execute(server, playerHandler);
+        command.getHandler().execute(playerHandler);
     }
 }

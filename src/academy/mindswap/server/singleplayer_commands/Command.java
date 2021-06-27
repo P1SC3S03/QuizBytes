@@ -2,8 +2,8 @@ package academy.mindswap.server.singleplayer_commands;
 
 public enum Command {
 
-    EASY_MODE("1", new EasyMode()),
-    HARD_MODE("2", new HardMode());
+    EASY_MODE("1", new EasyDifficultyMode()),
+    HARD_MODE("2", new HardDifficultyMode());
 
     private String message;
     private CommandHandler handler;
