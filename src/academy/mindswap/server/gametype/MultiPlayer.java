@@ -18,7 +18,7 @@ public class MultiPlayer {
     private FilesLoad fileReader;
     private int difficultyScore;
     private final int maxEasyCorrectScore = 3;
-    private final int maxHardCorrectScore = 6;
+    private final int maxHardCorrectScore = 15;
     private int answeredQuestions;
     private int correctAnsweredQuestions;
     private boolean didHitMe;
@@ -40,7 +40,7 @@ public class MultiPlayer {
      */
     public void play(Server server, Server.PlayerHandler playerHandler) throws IOException, InterruptedException {
 
-        Timer timer = new Timer(1, playerHandler.getPlayerSocket());
+        Timer timer = new Timer(3, playerHandler.getPlayerSocket());
         Thread timerThread = new Thread(timer);
         timerThread.start();
 
@@ -193,7 +193,7 @@ public class MultiPlayer {
     public void header(Timer timer, Server server, Server.PlayerHandler playerHandler) {
         playerHandler.send("--------------------------------------------------------------------------");
         playerHandler.send("Your Score: " + playerHandler.getPlayerScore() + "         Time left: " + timer.getSeconds()
-                + "         Top Player Score: " + server.getHighestScore());
+                + "'s" + "         Top Player Score: " + server.getHighestScore());
         playerHandler.send("--------------------------------------------------------------------------");
     }
 

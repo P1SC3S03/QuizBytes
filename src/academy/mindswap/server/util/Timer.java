@@ -8,7 +8,6 @@ import java.net.Socket;
  * Blueprint for the regressive Timer to be used in the game's MultiPlayer.
  */
 public class Timer extends java.util.Timer implements Runnable {
-    private int minutes;
     private int seconds;
     private BufferedWriter out;
     private Socket socket;
@@ -22,7 +21,6 @@ public class Timer extends java.util.Timer implements Runnable {
      */
     public Timer(int minutes, Socket socket) throws IOException {
         this.socket = socket;
-        this.minutes = minutes - 1;
         this.seconds = minutes * 60;
         out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
     }
@@ -34,9 +32,6 @@ public class Timer extends java.util.Timer implements Runnable {
     @Override
     public void run() {
         while (!socket.isClosed()) {
-            if (minutes < 0) {
-                return;
-            }
             seconds--;
             setSeconds(seconds);
 

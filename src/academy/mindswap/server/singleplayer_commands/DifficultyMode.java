@@ -41,6 +41,7 @@ public abstract class DifficultyMode {
             playerHandler.send(question.toString());
             String answer = playerHandler.getIn().readLine();
 
+
             if (answer.equals("/menu") || answer.equals("/quit")) {
                 playerHandler.dealWithCommand(answer);
                 return;
@@ -49,16 +50,19 @@ public abstract class DifficultyMode {
                 playerHandler.dealWithCommand(answer);
                 continue;
             }
+            if (answer.equals("/steal") || answer.equals("/hit me")) {
+                playerHandler.send(Messages.SINGLEPLAYER_COMMAND_RESTRICTION);
+                Thread.sleep(5000);
+                continue;
+            }
             if (answer.equals(question.getCorrectAnswer())) {
                 playerHandler.setPlayerScore(playerHandler.getPlayerScore() + difficultyScore);
                 playerHandler.send(Messages.CORRECT_ANSWER);
+                Thread.sleep(500);
                 correctAnswers++;
-            } else {
-                if (playerHandler.isCommand(answer)) {
-                    playerHandler.dealWithCommand(answer);
-                }
-                playerHandler.send(Messages.INCORRECT_ANSWER);
             }
+            playerHandler.send(Messages.INCORRECT_ANSWER);
+            Thread.sleep(500);
         }
         playerHandler.send("Your final score is " + playerHandler.getPlayerScore() + ".\n" + "You got " + correctAnswers
                 + " correct answers out of " + questions.size() + "!\n");

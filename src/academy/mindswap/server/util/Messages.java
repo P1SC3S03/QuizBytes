@@ -34,9 +34,9 @@ public class Messages {
             \nCOMMAND LIST:
             /quit -> Quits the game
             /menu -> Go back to main menu
-            /hit me -> [MultiPlayer Only] If you feel extra lucky
-            /steal -> Steal someone's points
-            /support -> Get emotional support from 'Byty' the Server\n
+            /support -> Get emotional support from 'Byty' the Server
+            /hit me -> If you feel extra lucky [MultiPlayer Only] 
+            /steal -> Steal someone's points [MultiPlayer Only] \n
             """;
 
     public static final String SINGLEPLAYER_MENU = """
@@ -59,6 +59,15 @@ public class Messages {
             "   ______ \n" +
             "  /     /| \n" +
             " /     /#|--------(REALLY?! DIDN'T I TELL YOU TO READ THE RULES & COMMANDS??!!)\n" +
+            "/_____/##|\n" +
+            "|     |##/\n" +
+            "|     |#/\n" +
+            "|_____|/ \n";
+
+    public static final String SINGLEPLAYER_COMMAND_RESTRICTION = "" +
+            "   ______ \n" +
+            "  /     /| \n" +
+            " /     /#|--------(Are you trying to do those commands on me?! Maybe you should try them on multiplayer)\n" +
             "/_____/##|\n" +
             "|     |##/\n" +
             "|     |#/\n" +

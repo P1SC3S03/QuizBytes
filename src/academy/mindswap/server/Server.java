@@ -269,12 +269,12 @@ public class Server {
                     break;
                 case "3":
                     send(Messages.COMMAND_LIST);
-                    Thread.sleep(2000);
+                    Thread.sleep(10000);
                     send(Messages.MAIN_MENU);
                     break;
                 case "4":
                     listOfTop10(this);
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
                     send(Messages.MAIN_MENU);
                     break;
                 case "0":
@@ -318,7 +318,7 @@ public class Server {
                     break;
                 case "/support":
                     send(Messages.EMOTIONAL_SUPPORT);
-                    Thread.sleep(3000);
+                    Thread.sleep(4000);
                     break;
                 case "/hit me":
                     send(Messages.HIT_ME);
