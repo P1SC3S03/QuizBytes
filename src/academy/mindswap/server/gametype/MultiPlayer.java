@@ -10,6 +10,9 @@ import academy.mindswap.server.util.Timer;
 import java.io.IOException;
 import java.util.LinkedList;
 
+/**
+ * MultiPlayer Class
+ */
 public class MultiPlayer {
     private LinkedList<Question> questions;
     private FilesLoad fileReader;
@@ -26,6 +29,15 @@ public class MultiPlayer {
         fileReader = new FilesLoad();
     }
 
+    /**
+     * Creates a thread for the timer. Depending on the player score, loads the correct level of difficulty list of
+     * questions and calls for the askQuestions method, verifying the level change conditions.
+     *
+     * @param server        - server needed in the askQuestions method.
+     * @param playerHandler - player handler needed to send messages to the player and get its score.
+     * @throws IOException          If an input or output exception occurs
+     * @throws InterruptedException If an interruption exception occurs
+     */
     public void play(Server server, Server.PlayerHandler playerHandler) throws IOException, InterruptedException {
 
         Timer timer = new Timer(1, playerHandler.getPlayerSocket());
@@ -58,7 +70,20 @@ public class MultiPlayer {
         gameOver(server, playerHandler);
     }
 
-    public void askQuestions(Timer timer, Server server, Server.PlayerHandler playerHandler, int difficultyScore, int maxCorrectScore) throws IOException, InterruptedException {
+    /**
+     * Asks the player a given set of questions and deals with both answers [correct and incorrect] and commands.
+     *
+     * @param timer           - timer needed to get the time left in the game and set timer in proportion to the thread sleep.
+     * @param server          - needed to the header method.
+     * @param playerHandler   - needed to send messages to the player and deal with commands.
+     * @param difficultyScore - number of points for each correct answer giving in accordance to the difficulty of that
+     *                        same question.
+     * @param maxCorrectScore - maximum amount of correct points needed to change difficulty level of questions.
+     * @throws IOException          If an input or output exception occurs
+     * @throws InterruptedException If an interruption exception occurs
+     */
+    public void askQuestions(Timer timer, Server server, Server.PlayerHandler playerHandler, int difficultyScore,
+                             int maxCorrectScore) throws IOException, InterruptedException {
         for (Question question : questions) {
 
             while (timer.getSeconds() > 0) {
@@ -133,7 +158,18 @@ public class MultiPlayer {
             }
         }
     }
-    //TODO definir quantas questões
+
+    /**
+     * Sends the final message of the game containing the final score, the number of correct answers and the total
+     * answers that he was given during the time set.
+     * Adds final players score to the score list and sets the highest score, resets booleans and removes the given
+     * player handler from the multiplayer list and prompts it back to the main menu.
+     *
+     * @param server        - server needed to add the player's score to the score list, define highscore and remove
+     *                      player handler from the multiplayer list.
+     * @param playerHandler - player handler needed to prompt user back with main menu.
+     * @throws InterruptedException If an interruption exception occurs
+     */
     public void gameOver(Server server, Server.PlayerHandler playerHandler) throws InterruptedException {
         playerHandler.send("Your final score is " + playerHandler.getPlayerScore() + ".\n" + "You got "
                 + correctAnsweredQuestions + " correct answers out of " + answeredQuestions + "!\n");
@@ -146,27 +182,59 @@ public class MultiPlayer {
         playerHandler.send(Messages.MAIN_MENU);
     }
 
+    /**
+     * Creates a header with a graphical interface for each question containing the player's score, the time left to the
+     * end of the multiplayer game and the top/highest player score.
+     *
+     * @param timer         - timer needed to get the time left in the game
+     * @param server        - server needed to get the top player's score
+     * @param playerHandler - player handler needed to get the player's score
+     */
     public void header(Timer timer, Server server, Server.PlayerHandler playerHandler) {
         playerHandler.send("--------------------------------------------------------------------------");
-        playerHandler.send("Your Score: " + playerHandler.getPlayerScore() + "          Time left: " + timer.getSeconds() + "          Top Player Score: " + server.getHighestScore());
+        playerHandler.send("Your Score: " + playerHandler.getPlayerScore() + "         Time left: " + timer.getSeconds()
+                + "         Top Player Score: " + server.getHighestScore());
         playerHandler.send("--------------------------------------------------------------------------");
     }
 
+    /**
+     * Loads a list of easy questions from a file path and returns it.
+     *
+     * @return a list of easy questions
+     * @throws IOException If an input or output exception occurs
+     */
     private LinkedList loadEasyQuestions() throws IOException {
         questions = fileReader.LoadQuestionsFromFile("resources/easy.txt");
         return questions;
     }
 
+    /**
+     * Loads a list of hard questions from a file path and returns it.
+     *
+     * @return a list of hard questions
+     * @throws IOException If an input or output exception occurs
+     */
     private LinkedList loadHardQuestions() throws IOException {
         questions = fileReader.LoadQuestionsFromFile("resources/hard.txt");
         return questions;
     }
 
+    /**
+     * Loads a list of insane questions from a file path and returns it.
+     *
+     * @return a list of insane questions
+     * @throws IOException If an input or output exception occurs
+     */
     private LinkedList loadInsaneQuestions() throws IOException {
         questions = fileReader.LoadQuestionsFromFile("resources/insane.txt");
         return questions;
     }
 
+    /**
+     * Creates a random number of points using the Math random method
+     *
+     * @return a random number of points from 1 to 5
+     */
     private int randomBonusPoints() {
         int min = 1;
         int max = 6;
