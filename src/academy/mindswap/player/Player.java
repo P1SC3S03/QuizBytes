@@ -44,6 +44,7 @@ public class Player {
                 socket.close();
                 continue;
             }
+            System.out.println(line);
         }
     }
 

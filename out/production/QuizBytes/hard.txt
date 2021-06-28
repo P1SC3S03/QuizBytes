@@ -5,6 +5,6 @@ Which feature can be implemented using encapsulation?;(a) Inheritance;(b) Abstra
 Which among the following violates the principle of encapsulation almost always?;(a) Local variables;(b) Public variables;(c) Global variables;(d) Array variables;b
 Which is not feature of OOP in general definitions?;(a) Code reusability;(b) Modularity;(c) Duplicate/Redundant data;(d) Efficient Code;c
 Which Feature of OOP illustrated the code reusability?;(a) Polymorphism;(b) Abstraction;(c) Encapsulation;(d) Inheritance;d
-When did the OOP concept first came into picture?;(a) 1970’s;(b) 1980’s;(c) 1993;(d) 1995;a
+When did the OOP concept first came into picture?;(a) 1960’s;(b) 1980’s;(c) 1993;(d) 1995;a
 Size of a class is: ;(a) Sum of the size of all the variables declared inside the class;(b) Sum of the size of all the variables along with inherited variables in the class;(c) Size of the largest size of variable;(d) Classes don’t have any size;d
 What is the scope of a class nested inside another class?;(a) Protected scope;(b) Private scope;(c) Global scope;(d) Depends on access specifier and inheritance used;d
