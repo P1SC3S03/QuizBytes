@@ -219,7 +219,7 @@ public class Server {
         public void run() {
             send(Messages.WELCOME_SERVER);
             try {
-                Thread.sleep(1000);
+                Thread.sleep(15000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

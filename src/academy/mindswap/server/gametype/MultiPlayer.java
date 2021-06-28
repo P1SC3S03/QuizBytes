@@ -40,7 +40,7 @@ public class MultiPlayer {
      */
     public void play(Server server, Server.PlayerHandler playerHandler) throws IOException, InterruptedException {
 
-        Timer timer = new Timer(3, playerHandler.getPlayerSocket());
+        Timer timer = new Timer(4, playerHandler.getPlayerSocket());
         Thread timerThread = new Thread(timer);
         timerThread.start();
 
