@@ -60,9 +60,10 @@ public abstract class DifficultyMode {
                 playerHandler.send(Messages.CORRECT_ANSWER);
                 Thread.sleep(500);
                 correctAnswers++;
+            } else{
+                playerHandler.send(Messages.INCORRECT_ANSWER);
+                Thread.sleep(500);
             }
-            playerHandler.send(Messages.INCORRECT_ANSWER);
-            Thread.sleep(500);
         }
         playerHandler.send("Your final score is " + playerHandler.getPlayerScore() + ".\n" + "You got " + correctAnswers
                 + " correct answers out of " + questions.size() + "!\n");
