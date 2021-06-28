@@ -257,6 +257,7 @@ public class Server {
         private void dealWithMainMenu(String message) throws InterruptedException, IOException {
             switch (message) {
                 case "1":
+                    playerScore = 0;
                     SinglePlayer singlePlayer = new SinglePlayer();
                     singlePlayer.play(this);
                     break;

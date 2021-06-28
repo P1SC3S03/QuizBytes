@@ -68,6 +68,7 @@ public abstract class DifficultyMode {
         playerHandler.send("Your final score is " + playerHandler.getPlayerScore() + ".\n" + "You got " + correctAnswers
                 + " correct answers out of " + questions.size() + "!\n");
         Thread.sleep(3000);
+        correctAnswers = 0;
         playerHandler.send(Messages.MAIN_MENU);
     }
 
